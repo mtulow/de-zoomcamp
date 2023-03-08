@@ -17,7 +17,7 @@ public class JsonConsumer {
     private Properties props = new Properties();
     private KafkaConsumer<String, Ride> consumer;
     public JsonConsumer() {
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "pkc-75m1o.europe-west3.gcp.confluent.cloud:9092");
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "pkc-6ojv2.us-west4.gcp.confluent.cloud:9092");
         props.put("security.protocol", "SASL_SSL");
         props.put("sasl.jaas.config", "org.apache.kafka.common.security.plain.PlainLoginModule required username='"+Secrets.KAFKA_CLUSTER_KEY+"' password='"+Secrets.KAFKA_CLUSTER_SECRET+"';");
         props.put("sasl.mechanism", "PLAIN");
@@ -34,7 +34,7 @@ public class JsonConsumer {
     }
 
     public void consumeFromKafka() {
-        System.out.println("Consuming form kafka started");
+        System.out.println("Consuming from kafka started");
         var results = consumer.poll(Duration.of(1, ChronoUnit.SECONDS));
         var i = 0;
         do {
