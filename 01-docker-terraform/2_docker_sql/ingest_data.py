@@ -114,7 +114,7 @@ def upload_dataset(file_path: str, table_name: str, schema: str, engine: sa.engi
         df.head(n=0).to_sql(name=table_name, con=engine, schema=schema, if_exists='replace')
 
         # Write the first chunk to the database
-        df.to_sql(name=table_name, con=engine, schema=schema, if_exists='append')
+        df.to_sql(name=table_name, con=engine, schema=schema, if_exists='append', index='trip_id')
 
         while True:
 
@@ -125,7 +125,7 @@ def upload_dataset(file_path: str, table_name: str, schema: str, engine: sa.engi
 
                 df[date_cols] = df[date_cols].apply(pd.to_datetime)
 
-                df.to_sql(name=table_name, con=engine, schema=schema, if_exists='append')
+                df.to_sql(name=table_name, con=engine, schema=schema, if_exists='append', index='trip_id')
 
                 t_end = time.perf_counter()
 
@@ -146,7 +146,7 @@ def upload_dataset(file_path: str, table_name: str, schema: str, engine: sa.engi
 
         # Write the dataframe to the database
         logging.info(f"Writing data to the table `{schema}`.`{table_name}` ...")
-        df.to_sql(name=table_name, con=engine, schema=schema,
+        df.to_sql(name=table_name, con=engine, schema=schema, index='trip_id',
                   if_exists='replace', chunksize=100_000, method='multi')
         
     else:
