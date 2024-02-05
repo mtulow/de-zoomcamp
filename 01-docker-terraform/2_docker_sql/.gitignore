@@ -1,3 +1,10 @@
 .ipynb_checkpoints/
+data/
 ny_taxi_postgres_data/
+pgadmin_data/
 *.csv
+*.parquet
+*.env
+.env
+*.log
+

@@ -60,7 +60,7 @@ docker run -it \
   -e POSTGRES_USER="root" \
   -e POSTGRES_PASSWORD="root" \
   -e POSTGRES_DB="ny_taxi" \
-  -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+  -v $(pwd)/data/ny_taxi_postgres_data:/var/lib/postgresql/data \
   -p 5432:5432 \
   postgres:13
 ```
@@ -69,7 +69,7 @@ If you see that `ny_taxi_postgres_data` is empty after running
 the container, try these:
 
 * Deleting the folder and running Docker again (Docker will re-create the folder)
-* Adjust the permissions of the folder by running `sudo chmod a+rwx ny_taxi_postgres_data`
+* Adjust the permissions of the folder by running `sudo chmod a+rwx data/ny_taxi_postgres_data`
 
 
 ### CLI for Postgres
@@ -90,7 +90,7 @@ pip install -U mycli
 Using `pgcli` to connect to Postgres
 
 ```bash
-pgcli -h localhost -p 5432 -u root -d ny_taxi
+pgcli -h $PG_HOST -p $PG_PORT -u $PG_USERNAME -d $PG_DATABASE
 ```
 
 
@@ -140,7 +140,7 @@ docker run -it \
   -e POSTGRES_USER="root" \
   -e POSTGRES_PASSWORD="root" \
   -e POSTGRES_DB="ny_taxi" \
-  -v c:/Users/alexe/git/data-engineering-zoomcamp/week_1_basics_n_setup/2_docker_sql/ny_taxi_postgres_data:/var/lib/postgresql/data \
+  -v $(pwd)/data/ny_taxi_postgres_data:/var/lib/postgresql/data \
   -p 5432:5432 \
   --network=pg-network \
   --name pg-database \
@@ -165,22 +165,47 @@ docker run -it \
 Running locally
 
 ```bash
-URL="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz"
+# Set the parameters
+SERVICE=green
+YEAR=2019
+MONTH=9
 
+# Run the script
 python ingest_data.py \
-  --user=root \
-  --password=root \
-  --host=localhost \
-  --port=5432 \
-  --db=ny_taxi \
-  --table_name=yellow_taxi_trips \
-  --url=${URL}
+  --service=$SERVICE \
+  --year=$YEAR \
+  --month=$MONTH \
+  --user=$PG_USERNAME \
+  --password=$PG_PASSWORD \
+  --host=$PG_HOST \
+  --port=$PG_PORT \
+  --db=$PG_DATABASE
 ```
 
 Build the image
 
 ```bash
 docker build -t taxi_ingest:v001 .
+```
+
+Run the script with Docker
+
+```bash
+service=green
+year=2019
+month=9
+
+docker run -it \
+  --network=pg-network \
+  taxi_ingest:v001 \
+    --service=$SERVICE \
+    --year=$YEAR \
+    --month=$MONTH \
+    --user=$PG_USERNAME \
+    --password=$PG_PASSWORD \
+    --host=$PG_HOST \
+    --port=$PG_PORT \
+    --db=$PG_DATABASE
 ```
 
 On Linux you may have a problem building it:
@@ -196,25 +221,6 @@ You can solve it with `.dockerignore`:
 * Map `-v $(pwd)/data/ny_taxi_postgres_data:/var/lib/postgresql/data`
 * Create a file `.dockerignore` and add `data` there
 * Check [this video](https://www.youtube.com/watch?v=tOr4hTsHOzU&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb) (the middle) for more details 
-
-
-
-Run the script with Docker
-
-```bash
-URL="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz"
-
-docker run -it \
-  --network=pg-network \
-  taxi_ingest:v001 \
-    --user=root \
-    --password=root \
-    --host=pg-database \
-    --port=5432 \
-    --db=ny_taxi \
-    --table_name=yellow_taxi_trips \
-    --url=${URL}
-```
 
 ### Docker-Compose 
 
@@ -239,7 +245,7 @@ docker-compose down
 Note: to make pgAdmin configuration persistent, create a folder `data_pgadmin`. Change its permission via
 
 ```bash
-sudo chown 5050:5050 data_pgadmin
+sudo chown 5050:5050 data/pgadmin_data
 ```
 
 and mount it to the `/var/lib/pgadmin` folder:
