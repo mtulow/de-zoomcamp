@@ -191,9 +191,9 @@ docker build -t taxi_ingest:v001 .
 Run the script with Docker
 
 ```bash
-service=green
-year=2019
-month=9
+SERVICE=green
+YEAR=2019
+MONTH=9
 
 docker run -it \
   --network=pg-network \
