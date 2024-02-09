@@ -180,8 +180,10 @@ def main(params):
 
     # Remove the files after ingesting the data
     logging.info(f"Removing files `{file_name}` & `{compressed_file}` ...")
-    os.remove(file_name)
-    os.remove(compressed_file)
+    if os.path.exists(file_name):
+        os.remove(file_name)
+    if os.path.exists(compressed_file):
+        os.remove(compressed_file)
 
 
 
