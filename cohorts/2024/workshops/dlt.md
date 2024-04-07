@@ -10,10 +10,15 @@
 
 ​By the end of this workshop, you’ll be able to write data pipelines like a senior data engineer: Quickly, concisely, scalable, and self-maintaining.
 
-If you don't follow the course and only want to attend the workshop, sign up here: https://lu.ma/wupfy6dd
-
+Video: https://www.youtube.com/live/oLXhBM7nf2Q
 
 --- 
+
+# Navigation
+
+* [Workshop content](dlt_resources/data_ingestion_workshop.md)
+* [Workshop notebook](dlt_resources/workshop.ipynb)
+* [Homework starter notebook](dlt_resources/homework_starter.ipynb)
 
 # Resources
 
@@ -74,10 +79,12 @@ The [linked colab notebook](https://colab.research.google.com/drive/1Te-AT0lfh0G
 - **D**: 390
 
 #### Question 4: Merge the 2 generators using the ID column. Calculate the sum of ages of all the people loaded as described above.
-- **A**: 205
-- **B**: 213
-- **C**: 221
-- **D**: 230
+- **A**: 215
+- **B**: 266
+- **C**: 241
+- **D**: 258
+
+Submit the solution here: https://courses.datatalks.club/de-zoomcamp-2024/homework/workshop1
 
 --- 
 # Next steps
@@ -109,6 +116,7 @@ Here are some example projects that others did with dlt:
 [Read emails and send sumamry to slack with AI and Kestra](https://dlthub.com/docs/blog/dlt-kestra-demo-blog),
 [Mode +dlt capabilities](https://dlthub.com/docs/blog/dlt-mode-blog),
 [dbt on cloud functions](https://dlthub.com/docs/blog/dlt-dbt-runner-on-cloud-functions)
+- If you want to use dlt in your project, [check this list of public APIs](https://dlthub.com/docs/blog/practice-api-sources)
 
 
 If you create a personal project, consider submitting it to our blog - we will be happy to showcase it. Just drop us a line in the dlt slack.
@@ -119,3 +127,7 @@ If you create a personal project, consider submitting it to our blog - we will b
 - **Give us a [GitHub Star!](https://github.com/dlt-hub/dlt)**
 - **Join our [Slack community](https://dlthub.com/community)**
 
+
+# Notes
+
+* Add your notes here
